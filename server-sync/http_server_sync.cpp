@@ -266,35 +266,35 @@ void create_html()
     if (ofs.is_open())
     {
         ofs<< R"(<!DOCTYPE html>
-        <html lang="en">
-        <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-        <scrip src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        </head>
-        <body>
-            <a href="/server.exe" title="下载文件">server.exe</a>
-            <p></p>
-            <div id="app">
-            <input type="text" v-model="num">
-            <table border="1">
-            <tr v-for="i in parseInt(num) ">
-                <td v-for="j in i">{{j}}*{{i}}={{i*j}}</td>
-            </tr>
-            </table>
-            </div>
-            <script>
-                var app = new Vue({
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <scrip src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <a href="/server.exe" title="下载文件">server.exe</a>
+        <p></p>
+        <div id="app">
+        <input type="text" v-model="num">
+        <table border="1">
+        <tr v-for="i in parseInt(num) ">
+            <td v-for="j in i">{{j}}*{{i}}={{i*j}}</td>
+        </tr>
+        </table>
+        </div>
+        <script>
+            var app = new Vue({
                     el: "#app",
-                    data:{
+                    data: {
                             num:9
                         }
                     });
-            </script>
-        </body>
-        </html>)" << std::endl;
-            ofs.close();
-     }
+        </script>
+    </body>
+    </html>)" << std::endl;
+        ofs.close();
+    }
 
 }
 
