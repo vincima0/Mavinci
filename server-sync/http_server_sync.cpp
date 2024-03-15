@@ -270,11 +270,11 @@ void create_html()
         <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <scrip src="https://cdn.jsdeliver.net/npm/vue/dist/vue.js"></script>
+        <scrip src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         </head>
         <body>
             <a href="/server.exe" title="下载文件">server.exe</a>
-            <p>第一个网站：请在瞎买呢输入数据，生成乘法口诀表</p>
+            <p>第一个网站：请在下面输入数据，生成乘法口诀表</p>
             <div id="app">
             <input type="text" v-model="num">
             <table border="1">
