@@ -270,7 +270,7 @@ void create_html()
     <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <scrip src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     </head>
     <body>
         <a href="/server.exe" title="下载文件">server.exe</a>
