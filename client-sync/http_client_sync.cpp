@@ -23,7 +23,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
-
+#include <fstream>
 namespace beast = boost::beast;     // from <boost/beast.hpp>
 namespace http = beast::http;       // from <boost/beast/http.hpp>
 namespace net = boost::asio;        // from <boost/asio.hpp>
@@ -72,7 +72,14 @@ int main(int argc, char** argv)
 
         // Write the message to standard out
         std::cout << res << std::endl;
-
+        
+        std::ofstream ofs;
+        ofs.open("baidu.txt",std::ios_base::trunc | std::ios_base::out);
+        if(ofs.is_open())
+        {
+            ofs<< res << std::endl;
+            ofs.close();
+        }
         // Gracefully close the socket
         beast::error_code ec;
         stream.socket().shutdown(tcp::socket::shutdown_both, ec);
