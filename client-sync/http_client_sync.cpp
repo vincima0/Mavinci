@@ -35,7 +35,7 @@ int main(int argc, char** argv)
     try
     {
        
-        auto const host = "www.baidu.com";
+        auto const host = "www.njupt.edu.cn";
         auto const port = "80";
         auto const target = "/";
         int version =  11;
@@ -74,7 +74,9 @@ int main(int argc, char** argv)
         std::cout << res << std::endl;
         
         std::ofstream ofs;
-        ofs.open("baidu.txt",std::ios_base::trunc | std::ios_base::out);
+        std::string file_name = host;
+        file_name.append(".txt");
+        ofs.open(file_name.c_str(),std::ios_base::trunc | std::ios_base::out);
         if(ofs.is_open())
         {
             ofs<< res << std::endl;
