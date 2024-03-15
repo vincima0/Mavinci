@@ -106,6 +106,7 @@ handle_request(
     beast::string_view doc_root,
     http::request<Body, http::basic_fields<Allocator>>&& req)
 {
+    std::cout<<req <<std::endl;
     // Returns a bad request response
     auto const bad_request =
     [&req](beast::string_view why)
@@ -255,6 +256,51 @@ do_session(
 
     // At this point the connection is closed gracefully
 }
+
+
+void create_html()
+{
+    std::ofstream ofs;
+    std::string file_name ="index.html";
+    ofs.open(file_name.c_str(),std::ios_base::trunc | std::ios_base::out);
+    if (ofs.is_open())
+    {
+        ofs<< R"(<!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <scrip src="https://cdn.jsdeliver.net/npm/vue/dist/vue.js"></script>
+        </head>
+        <body>
+            <a href="/server.exe" title="下载文件">server.exe</a>
+            <p>第一个网站：请在瞎买呢输入数据，生成乘法口诀表</p>
+            <div id="app">
+            <input type="text" v-model="num">
+            <table border="1">
+            <tr v-for="i in parseInt(num) ">
+                <td v-for="j in i">{{j}}*{{i}}={{i*j}}</td>
+            </tr>
+            </table>
+            </div>
+            <script>
+                var app = new Vue({
+                    el: "#app",
+                    data:{
+                            num:9
+                    }
+                });
+            </script>
+        </body>
+        </html>)" <<std::endl;
+            ofs.close();
+     }
+
+}
+
+
+
+
 
 //------------------------------------------------------------------------------
 
