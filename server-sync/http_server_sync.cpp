@@ -262,18 +262,11 @@ int main(int argc, char* argv[])
 {
     try
     {
-        // Check command line arguments.
-        if (argc != 4)
-        {
-            std::cerr <<
-                "Usage: http-server-sync <address> <port> <doc_root>\n" <<
-                "Example:\n" <<
-                "    http-server-sync 0.0.0.0 8080 .\n";
-            return EXIT_FAILURE;
-        }
-        auto const address = net::ip::make_address(argv[1]);
-        auto const port = static_cast<unsigned short>(std::atoi(argv[2]));
-        auto const doc_root = std::make_shared<std::string>(argv[3]);
+        create_html();
+        auto const address = net::ip::make_address("0.0.0.0");
+        auto const port = static_cast<unsigned short>(std::atoi("8080"));
+        const auto& path =std::filesystem::current_path().generic_string();
+        auto const doc_root = std::make_shared<std::string>(path);
 
         // The io_context is required for all I/O
         net::io_context ioc{1};
