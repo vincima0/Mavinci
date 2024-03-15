@@ -274,7 +274,7 @@ void create_html()
         </head>
         <body>
             <a href="/server.exe" title="下载文件">server.exe</a>
-            <p>第一个网站：请在下面输入数据，生成乘法口诀表</p>
+            <p></p>
             <div id="app">
             <input type="text" v-model="num">
             <table border="1">
