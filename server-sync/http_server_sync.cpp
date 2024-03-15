@@ -288,11 +288,11 @@ void create_html()
                     el: "#app",
                     data:{
                             num:9
-                    }
-                });
+                        }
+                    });
             </script>
         </body>
-        </html>)" <<std::endl;
+        </html>)" << std::endl;
             ofs.close();
      }
 
