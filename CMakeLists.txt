@@ -8,6 +8,7 @@ project ("${CURRENT_FOLDER}")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
 add_subdirectory(server)
 add_subdirectory(server-sync)
