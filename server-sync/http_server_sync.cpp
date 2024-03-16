@@ -153,7 +153,7 @@ handle_request(
     //     req.method() != http::verb::head)
     //     return bad_request("Unknown HTTP-method");
 
-    if (req.target == http_url_router::TEMPERATURE)
+    if (req.target() == http_url_router::TEMPERATURE)
     {
         const auto json_str = req.body();
         boost::system::error_code ec;
