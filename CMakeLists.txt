@@ -5,7 +5,7 @@ get_filename_component(CURRENT_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
 include_directories(${CMAKE_SOURCE_DIR}/thirdparty)
 include_directories(${CMAKE_SOURCE_DIR}/common)
 
-link_directories(${CMAKE_SOURCR_DIR}/thirdparty/libs)
+link_directories(${CMAKE_SOURCE_DIR}/thirdparty/libs)
 
 project ("${CURRENT_FOLDER}")
 
