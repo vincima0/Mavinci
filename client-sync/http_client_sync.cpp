@@ -39,7 +39,7 @@ int main(int argc, char** argv)
        
         auto const host = "127.0.0.1";
         auto const port = "8080";
-        auto const target = "/_upload/article/images/14/19/922572fe486f868a4a14739109c0/f1cd1db4-6583-4f11-a7bd-b6d8b07f40b8.jpg";
+        auto const target = http_url_router::TEMPERATURE;
         int version =  11;
 
         // The io_context is required for all I/O
@@ -59,9 +59,11 @@ int main(int argc, char** argv)
         http::request<http::string_body> req{http::verb::post, target, version};
         req.set(http::field::host, host);
         req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
-
+        
+        temperature_sensor sensor;
         boost::json::object data;
-        data["temperature"] = 26.f;
+        data["temperature"] = sensor.get_temperature();
+        data["time"]= std::time(nullptr);
         std::string json_data = boost::json::serialize(data);
         req.body() = json_data;
         req.prepare_payload();
