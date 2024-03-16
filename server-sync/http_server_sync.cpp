@@ -18,6 +18,7 @@
 #include <boost/beast/version.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/config.hpp>
+#include "common_define.h"
 #include <cstdlib>
 #include <iostream>
 #include <memory>

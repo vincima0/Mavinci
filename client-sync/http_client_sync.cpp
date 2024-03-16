@@ -14,7 +14,7 @@
 //------------------------------------------------------------------------------
 
 //[example_http_client
-
+#include "common_define.h"
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
