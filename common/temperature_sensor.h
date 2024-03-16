@@ -1,3 +1,5 @@
+
+#pragma once
 class temperature_sensor final
 {
 public:
