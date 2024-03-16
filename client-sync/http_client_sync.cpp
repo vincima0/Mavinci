@@ -14,8 +14,8 @@
 //------------------------------------------------------------------------------
 
 //[example_http_client
-#include <common/common_define.h>
-#include <common/temperature_sensor.h>
+#include "common_define.h"
+#include "temperature_sensor.h"
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
