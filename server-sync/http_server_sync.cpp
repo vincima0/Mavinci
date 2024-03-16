@@ -308,8 +308,8 @@ int main(int argc, char* argv[])
 {
     try
     {
-        create_html();
-        auto const address = net::ip::make_address("0.0.0.0");
+        //create_html();
+        auto const address = net::ip::make_address("127.0.0.1");
         auto const port = static_cast<unsigned short>(std::atoi("8080"));
         const auto& path =std::filesystem::current_path().generic_string();
         auto const doc_root = std::make_shared<std::string>(path);

@@ -35,8 +35,8 @@ int main(int argc, char** argv)
     try
     {
        
-        auto const host = "xkb.njupt.edu.cn";
-        auto const port = "80";
+        auto const host = "127.0.0.1";
+        auto const port = "8080";
         auto const target = "/_upload/article/images/14/19/922572fe486f868a4a14739109c0/f1cd1db4-6583-4f11-a7bd-b6d8b07f40b8.jpg";
         int version =  11;
 
