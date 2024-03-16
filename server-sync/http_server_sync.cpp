@@ -148,9 +148,9 @@ handle_request(
     };
 
     // Make sure we can handle the method
-    if( req.method() != http::verb::get &&
-        req.method() != http::verb::head)
-        return bad_request("Unknown HTTP-method");
+    // if( req.method() != http::verb::get &&
+    //     req.method() != http::verb::head)
+    //     return bad_request("Unknown HTTP-method");
 
     // Request path must be absolute and not contain "..".
     if( req.target().empty() ||
