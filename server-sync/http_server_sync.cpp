@@ -152,6 +152,28 @@ handle_request(
     //     req.method() != http::verb::head)
     //     return bad_request("Unknown HTTP-method");
 
+    if (req.target == http_url_router::TEMPERATURE)
+    {
+        const auto json_str = req.body();
+        boost::system::error_code ec;
+        const boost::json::value js = boost::json::parse(json_str,ec);
+        if(ec)
+        {
+            std::cout << ec.message() << std::endl;
+        }
+        else
+        {
+            if (js.is_object())
+            {
+                const boost::json::object& obj = js.as_object();
+            } else
+            {
+
+            }
+        }
+    }
+
+
     // Request path must be absolute and not contain "..".
     if( req.target().empty() ||
         req.target()[0] != '/' ||
