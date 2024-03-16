@@ -20,6 +20,7 @@
 #include <boost/beast/version.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/json/src.hpp>
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -54,9 +55,15 @@ int main(int argc, char** argv)
         stream.connect(results);
 
         // Set up an HTTP GET request message
-        http::request<http::string_body> req{http::verb::get, target, version};
+        http::request<http::string_body> req{http::verb::post, target, version};
         req.set(http::field::host, host);
         req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+
+        boost::json::object data;
+        data["temperature"] = 26.f;
+        std::string json_data = boost::json::serialize(data);
+        req.body() = json_data;
+        req.prepare_payload();
 
         // Send the HTTP request to the remote host
         http::write(stream, req);
