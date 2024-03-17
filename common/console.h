@@ -8,10 +8,10 @@
 
 namespace std
 {
-    inline ostream operator << (ostream ostr,const source_location& s1)
+    inline ostream operator << (ostream ostr,const source_location& sl)
     {
-        filesystem::path p{ s1.file_name() };
-        ostr << "["<< p.filename().generic_string()<<","<<s1.function_name()<<"("<<s1.line<<")]";
+        filesystem::path p{ sl.file_name() };
+        ostr << "["<< p.filename().generic_string()<<","<<sl.function_name()<<"("<<sl.line()<<")]";
         return ostr;
     }
 }
