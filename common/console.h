@@ -8,10 +8,28 @@
 
 namespace std
 {
-    inline ostream operator << (ostream ostr,const source_location& sl)
+    inline ostream operator << (ostream& ostr,const source_location& sl)
     {
         filesystem::path p{ sl.file_name() };
         ostr << "["<< p.filename().generic_string()<<","<<sl.function_name()<<"("<<sl.line()<<")]";
+        return ostr;
+    }
+    inline ostream operator << (ostream& ostr,const std::filesystem::path& p)
+    {
+        
+        ostr << p.generic_string();
+        return ostr;
+    }
+    inline ostream operator << (ostream& ostr,const std::system_error& p)
+    {
+        
+        ostr << "system_error=["<<p.what()<<","<<p.code()<<"]";
+        return ostr;
+    }
+    inline ostream operator << (ostream& ostr,const boost::system::system_error& p)
+    {
+        filesystem::path p{ sl.file_name() };
+        ostr << "boost_system_error=["<<p.what()<<","<<p.code()<<"]";
         return ostr;
     }
 }
