@@ -28,7 +28,7 @@ namespace std
     }
     inline ostream operator << (ostream& ostr,const boost::system::system_error& p)
     {
-        filesystem::path p{ sl.file_name() };
+       
         ostr << "boost_system_error=["<<p.what()<<","<<p.code()<<"]";
         return ostr;
     }
