@@ -1,13 +1,14 @@
+
+#pragma once
 #include <string>
 #include <source_location>
 #include <boost/beast.hpp>
+
+
 namespace beast = boost::beast;     // from <boost/beast.hpp>
 namespace http = beast::http;       // from <boost/beast/http.hpp>
 namespace net = boost::asio;        // from <boost/asio.hpp>
 using tcp = net::ip::tcp;           // from <boost/asio/ip/tcp.hpp>
-
-
-#pragma once
 
 
 class http_service final
@@ -54,7 +55,7 @@ public:
             return false;
         }
 
-        stream.socket().shutdown(tcp::socked::shutdown_both,ec);
+        stream.socket().shutdown(tcp::socket::shutdown_both,ec);
         if(ec && ec !=beast::errc::not_connected)
         {
             console::log(std::source_location::current(), host, port, ec);
@@ -69,4 +70,4 @@ public:
 
 
 
-} ;         
+};         
