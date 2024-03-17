@@ -22,7 +22,7 @@ public:
         //the io_context is required for all I/O
         boost::asio::io_context ioc;
         //these objects perform our I/O
-        net::ip::tcp::resolver resolver(ioc);
+        boost::asio::ip::tcp::resolver resolver(ioc);
         boost::beast::tcp_stream stream(ioc);
         // look up the domain name
         boost::system::error_code ec;
@@ -49,7 +49,7 @@ public:
         //this buffer id used for reading and must be persisted
         boost::beast::flat_buffer buffer;
         //receive the HTTP response
-        http::read(stream,buffer,res,ec);
+        boost::beast::http::read(stream,buffer,res,ec);
         if(ec)
         {
             console::log(std::source_location::current(),host,port,ec);
