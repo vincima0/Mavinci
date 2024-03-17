@@ -13,7 +13,8 @@ class console final
     template<typename T,typename ...Types>
     constexpr static void Build(std::ostream& log,const T& firstArg, const Types& ... args)
     {
-        log<<" "<<firstArg;
+        log <<" "<<firstArg;
+        Build (log,args...);
     }
 private:
     console()= delete;
