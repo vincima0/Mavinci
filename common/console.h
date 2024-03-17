@@ -32,7 +32,7 @@ public:
 
         static_assert(sizeof...(Types) > 0,"args > 0");
         std::cout<<std::boolalpha;
-        if constexpr (sizeof..(Types) > 0)
+        if constexpr (sizeof...(Types) > 0)
         {
             const boost::posix_time::ptime& localTime =
                 boost::posix_time::microsec_clock::local_time();
