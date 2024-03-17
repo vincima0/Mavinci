@@ -25,8 +25,25 @@ private:
     console& operator =(const console&) =delete;
     console& operator =(console&&)=delete;
 public:
-    static void log(...)
+    template<typename ...Types>
+    static void log(const Types&...args)
     {
+        std::lock_guard<std::mutex> guard{s_cout_mutex};
+
+        static_assert(sizeof...(Types) > 0,"args > 0");
+        std::cout<<std::boolalpha;
+        if constexpr (sizeof..(Types) > 0)
+        {
+            const boost::posix_time::ptime& localTime =
+                boost::posix_time::microsec_clock::local_time();
+
+            std::cout<<"[";
+            std::cout<<boost::posix_time::to_iso_extended_string(localTime);
+            std::cout<<" thread:"<<std::setfill(' ')<<std::setw(6);
+            std::cout<<std::this_thread::get_id();
+            std::cout<<"]";
+            Build(std::cout,args...);
+        }
 
     }
 
