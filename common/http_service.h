@@ -1,3 +1,4 @@
+#pragma once
 class http_service final
 {
 public:
