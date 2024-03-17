@@ -15,6 +15,7 @@
 
 //[example_http_client
 #include "common_define.h"
+#include "console.h"
 #include "http_service.h"
 #include "temperature_sensor.h"
 #include <boost/beast/core.hpp>
@@ -38,7 +39,7 @@ int main(int argc, char** argv)
     try
     {
         const auto& c =std::source_location::current();
-       std::cout<<c.column()<<" "<<c.file_name()<<c.function_name()<<"\n";
+        std::cout<<c.column()<<" "<<c.file_name()<<c.function_name()<<"\n";
         auto const host = "127.0.0.1";
         auto const port = "8080";
         auto const target = http_url_router::TEMPERATURE;

@@ -20,6 +20,7 @@
 #include <boost/config.hpp>
 #include <boost/json/src.hpp>
 #include "common_define.h"
+#include "console.h"
 #include <cstdlib>
 #include <iostream>
 #include <memory>
