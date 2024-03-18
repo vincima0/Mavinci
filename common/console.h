@@ -26,7 +26,7 @@ namespace std
         ostr << "boost_system_error=["<<p.what()<<","<<p.code()<<"]";
         return ostr;
     }
-    inline ostream& operator <<(ostream ostr,const exception& ec)
+    inline ostream& operator <<(ostream& ostr,const exception& ec)
     {
         ostr<<ec.what();
         return ostr;
