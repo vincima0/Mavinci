@@ -41,56 +41,31 @@ int main(int argc, char** argv)
         std::cout<<c.column()<<" "<<c.file_name()<<c.function_name()<<"\n";
         auto const host = "127.0.0.1";
         auto const port = "8080";
-        auto const target = http_url_router::TEMPERATURE_AND_LIGHT;
        
         while(true)
         {
-            // Set up an HTTP GET request message
-            http::request<http::string_body> req{http::verb::post, target, 11   };
-            req.set(http::field::host, host);
-            req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
-        
-            temperature_sensor sensor;
-            boost::json::object data;
+            //获取温度数据
+            temperature_sensor temp_sensor;
+            float temprature = temp_sensor.get_temperature();
+
+            //发送温度数据
+            http_service::send_temperature(host,port,temperature);
+
+            //获取光照数据
             light_sensor light_sensor;
-            data["light_intensity"] =light_sensor.get_light_intensity();
-            data["temperature"] = sensor.get_temperature();
-            data["time"]= std::time(nullptr);
-            std::string json_data = boost::json::serialize(data);
-            req.body() = json_data;
-            req.prepare_payload();
+            float light =light_sensor.get_light_intensity();
 
-
-        
-        
-        
-
-            http::response<http::string_body> res;
-            if(http_service::send_request(host,port,req,res))
-            {
-                console::log(std::source_location::current(),res);
-            } else{
-                return 0;
-            }
-
-        
-        
-            std::ofstream ofs;
-            std::string file_name = host;
-            file_name.append(".txt");
-            ofs.open(file_name.c_str(),std::ios_base::trunc | std::ios_base::out);
-            if(ofs.is_open())
-            {
-              ofs<< res << std::endl;
-              ofs.close();
-            }
-            // Gracefully close the socket
-            beast::error_code ec;
+            //发送光照数据
+            http_service::send_light(host,port,light);
 
             std::this_thread::sleep_for(std::chrono::seconds(5));
+
+
+
+
+
         }
-        
-        
+         
     }
     catch(std::exception const& e)
     {
