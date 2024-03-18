@@ -38,7 +38,7 @@ namespace std
         return ostr;
     }
 
-    inine ostream& operator <<(ostream& ostr,const boost::system::error_code& ec)
+    inline ostream& operator <<(ostream& ostr,const boost::system::error_code& ec)
     {
         ostr<<"boost_error_code=["<<ec.value()<<","<<ec.message()<<"]";
         return ostr;
