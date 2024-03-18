@@ -9,15 +9,12 @@
 
 //------------------------------------------------------------------------------
 //
-// Example: HTTP client, synchronous
-//
-//------------------------------------------------------------------------------
-
-//[example_http_client
+// Example: H//[example_http_client
 #include "common_define.h"
 #include "console.h"
 #include "http_service.h"
 #include "temperature_sensor.h"
+#include "light_sensor.h"
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
@@ -42,7 +39,7 @@ int main(int argc, char** argv)
         std::cout<<c.column()<<" "<<c.file_name()<<c.function_name()<<"\n";
         auto const host = "127.0.0.1";
         auto const port = "8080";
-        auto const target = http_url_router::TEMPERATURE;
+        auto const target = http_url_router::TEMPERATURE_AND_LIGHT;
        
 
         // Set up an HTTP GET request message
@@ -52,11 +49,18 @@ int main(int argc, char** argv)
         
         temperature_sensor sensor;
         boost::json::object data;
+        light_sensor light_sensor;
+        data["light_intensity"] =light_sensor.get_light_intensity();
         data["temperature"] = sensor.get_temperature();
         data["time"]= std::time(nullptr);
         std::string json_data = boost::json::serialize(data);
         req.body() = json_data;
         req.prepare_payload();
+
+
+        
+        
+        
 
         http::response<http::string_body> res;
         if(http_service::send_request(host,port,req,res))
@@ -89,4 +93,7 @@ int main(int argc, char** argv)
     return EXIT_SUCCESS;
 }
 
-//]
+//
+//
+//------------------------------------------------------------------------------
+
