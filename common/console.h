@@ -8,28 +8,39 @@
 
 namespace std
 {
-    inline ostream operator << (ostream& ostr,const source_location& sl)
-    {
-        filesystem::path p{ sl.file_name() };
-        ostr << "["<< p.filename().generic_string()<<","<<sl.function_name()<<"("<<sl.line()<<")]";
-        return ostr;
-    }
-    inline ostream operator << (ostream& ostr,const std::filesystem::path& p)
+    inline ostream& operator << (ostream& ostr,const std::filesystem::path& p)
     {
         
         ostr << p.generic_string();
         return ostr;
     }
-    inline ostream operator << (ostream& ostr,const std::system_error& p)
+    inline ostream& operator << (ostream& ostr,const std::system_error& p)
     {
         
         ostr << "system_error=["<<p.what()<<","<<p.code()<<"]";
         return ostr;
     }
-    inline ostream operator << (ostream& ostr,const boost::system::system_error& p)
+    inline ostream& operator << (ostream& ostr,const boost::system::system_error& p)
     {
        
         ostr << "boost_system_error=["<<p.what()<<","<<p.code()<<"]";
+        return ostr;
+    }
+    inline ostream& operator <<(ostream ostr,const exception& ec)
+    {
+        ostr<<ec.what();
+        return ostr;
+    }
+    
+    inline ostream& operator <<(ostream& ostr, const error_code& ec)
+    {
+        ostr<<"error_code=["<<ec.value()<<","<<ec.message()<<"]";
+        return ostr;
+    }
+
+    inine ostream& operator <<(ostream& ostr,const boost::system::error_code& ec)
+    {
+        ostr<<"boost_error_code=["<<ec.value()<<","<<ec.message()<<"]";
         return ostr;
     }
 }
