@@ -3,6 +3,8 @@
 #include <string>
 #include <source_location>
 #include <boost/beast.hpp>
+#include <boost/json/src.hpp>
+#include <boost\json\object.hpp>
 // namespace beast = boost::beast;     // from <boost/beast.hpp>
 // namespace http = beast::http;       // from <boost/beast/http.hpp>
 // namespace net = boost::asio;        // from <boost/asio.hpp>
@@ -22,14 +24,14 @@ public:
         data["time"] =std::time(nullptr);
         std::string json_data =boost::json::serialize(data);
 
-        http::request<http::string_body> req{http::verb::post,http_url_router::TEMPERATURE,11};
-        req.set(http::field::host, host);
-        req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+        boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::post,http_url_router::TEMPERATURE,11};
+        req.set(boost::beast::http::field::host, host);
+        req.set(boost::beast::http::field::user_agent, BOOST_BEAST_VERSION_STRING);
         req.body() = json_data;
         req.prepare_payload();
 
 
-        http::response<http::string_body> res;
+        boost::beast::http::response<boost::beast::http::string_body> res;
         if(send_request(host,port,req,res))
         {
             console::log(std::source_location::current(),res);
@@ -48,14 +50,14 @@ public:
         data["time"] =std::time(nullptr);
         std::string json_data =boost::json::serialize(data);
 
-        http::request<http::string_body> req{http::verb::post,http_url_router::TEMPERATURE,11};
-        req.set(http::field::host, host);
-        req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+        boost::beast::http::request<boost::beast::http::string_body> req{boost::beast::http::verb::post,http_url_router::LIGHT,11};
+        req.set(boost::beast::http::field::host, host);
+        req.set(boost::beast::http::field::user_agent, BOOST_BEAST_VERSION_STRING);
         req.body() = json_data;
         req.prepare_payload();
 
 
-        http::response<http::string_body> res;
+        boost::beast::http::response<boost::beast::http::string_body> res;
         if(send_request(host,port,req,res))
         {
             console::log(std::source_location::current(),res);

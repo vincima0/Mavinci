@@ -46,7 +46,7 @@ int main(int argc, char** argv)
         {
             //获取温度数据
             temperature_sensor temp_sensor;
-            float temprature = temp_sensor.get_temperature();
+            float temperature = temp_sensor.get_temperature();
 
             //发送温度数据
             http_service::send_temperature(host,port,temperature);
@@ -58,6 +58,8 @@ int main(int argc, char** argv)
             //发送光照数据
             http_service::send_light(host,port,light);
 
+
+            //五秒间隔
             std::this_thread::sleep_for(std::chrono::seconds(5));
 
 
