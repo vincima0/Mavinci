@@ -25,6 +25,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <chrono>//时间间隔
+#include <thread>//线程睡眠
 namespace beast = boost::beast;     // from <boost/beast.hpp>
 namespace http = beast::http;       // from <boost/beast/http.hpp>
 namespace net = boost::asio;        // from <boost/asio.hpp>
@@ -41,48 +43,53 @@ int main(int argc, char** argv)
         auto const port = "8080";
         auto const target = http_url_router::TEMPERATURE_AND_LIGHT;
        
-
-        // Set up an HTTP GET request message
-        http::request<http::string_body> req{http::verb::post, target, 11   };
-        req.set(http::field::host, host);
-        req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
-        
-        temperature_sensor sensor;
-        boost::json::object data;
-        light_sensor light_sensor;
-        data["light_intensity"] =light_sensor.get_light_intensity();
-        data["temperature"] = sensor.get_temperature();
-        data["time"]= std::time(nullptr);
-        std::string json_data = boost::json::serialize(data);
-        req.body() = json_data;
-        req.prepare_payload();
-
-
-        
-        
-        
-
-        http::response<http::string_body> res;
-        if(http_service::send_request(host,port,req,res))
+        while(true)
         {
-            console::log(std::source_location::current(),res);
-        } else{
-            return 0;
-        }
+            // Set up an HTTP GET request message
+            http::request<http::string_body> req{http::verb::post, target, 11   };
+            req.set(http::field::host, host);
+            req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+        
+            temperature_sensor sensor;
+            boost::json::object data;
+            light_sensor light_sensor;
+            data["light_intensity"] =light_sensor.get_light_intensity();
+            data["temperature"] = sensor.get_temperature();
+            data["time"]= std::time(nullptr);
+            std::string json_data = boost::json::serialize(data);
+            req.body() = json_data;
+            req.prepare_payload();
+
 
         
         
-        std::ofstream ofs;
-        std::string file_name = host;
-        file_name.append(".txt");
-        ofs.open(file_name.c_str(),std::ios_base::trunc | std::ios_base::out);
-        if(ofs.is_open())
-        {
-            ofs<< res << std::endl;
-            ofs.close();
+        
+
+            http::response<http::string_body> res;
+            if(http_service::send_request(host,port,req,res))
+            {
+                console::log(std::source_location::current(),res);
+            } else{
+                return 0;
+            }
+
+        
+        
+            std::ofstream ofs;
+            std::string file_name = host;
+            file_name.append(".txt");
+            ofs.open(file_name.c_str(),std::ios_base::trunc | std::ios_base::out);
+            if(ofs.is_open())
+            {
+              ofs<< res << std::endl;
+              ofs.close();
+            }
+            // Gracefully close the socket
+            beast::error_code ec;
+
+            std::this_thread::sleep_for(std::chrono::seconds(5));
         }
-        // Gracefully close the socket
-        beast::error_code ec;
+        
         
     }
     catch(std::exception const& e)
