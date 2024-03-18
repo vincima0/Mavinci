@@ -9,6 +9,13 @@
 #include <boost/system/system_error.hpp>
 namespace std
 {
+    inline ostream& operator <<(ostream& ostr, const source_location& sl)
+    {
+        filesystem::path p{ sl.file_name()};
+        ostr<<"["<<p.filename().generic_string()<<","<<sl.function_name()<<"("<<sl.line()<<")]";
+        return ostr;
+    }
+
     inline ostream& operator << (ostream& ostr,const std::filesystem::path& p)
     {
         
