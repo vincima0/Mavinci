@@ -5,7 +5,8 @@
 #include <filesystem>
 #include <source_location>
 #include <boost/date_time.hpp>
-
+#include <boost/system/detail/error_code.hpp>
+#include <boost/system/system_error.hpp>
 namespace std
 {
     inline ostream& operator << (ostream& ostr,const std::filesystem::path& p)
@@ -51,7 +52,7 @@ class console final
     {
         log<<std::endl;
     }
-    template<typename T,typename ...Types>
+    template<typename T,typename ... Types>
     constexpr static void Build(std::ostream& log,const T& firstArg, const Types& ... args)
     {
         log <<" "<<firstArg;
