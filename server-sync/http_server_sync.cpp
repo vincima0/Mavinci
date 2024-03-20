@@ -19,6 +19,7 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/config.hpp>
 #include <boost/json/src.hpp>
+#include <boost/json.hpp>
 #include "common_define.h"
 #include "console.h"
 #include <cstdlib>
@@ -168,13 +169,65 @@ handle_request(
             if (js.is_object())
             {
                 const boost::json::object& obj = js.as_object();
+                // 从 JSON 对象中读取各种类型的数据
+                if (obj.contains("temperature") && obj.at("temperature").is_number())
+                {
+                    float temperature = obj.at("temperature").as_double();
+                    std::cout << "Temperature: " << temperature << std::endl;
+                }
+
+                if (obj.contains("time") && obj.at("time").is_number())
+                {
+                    std::time_t timestamp = obj.at("time").as_int64();
+                    std::cout << "Timestamp: " << std::asctime(std::localtime(&timestamp)) << std::endl;
+                }
+
+            // 可以继续读取其他类型的数据，如字符串、布尔值等
+            
             } else
             {
-
+                std::cerr << "Received JSON is not an object." << std::endl;
             }
         }
     }
 
+
+if (req.target() == http_url_router::LIGHT)
+{
+    const auto json_str = req.body();
+    boost::system::error_code ec;
+    const boost::json::value js = boost::json::parse(json_str, ec);
+    if (ec)
+    {
+        std::cout << "Error parsing JSON: " << ec.message() << std::endl;
+    }
+    else
+    {
+        if (js.is_object())
+        {
+            const boost::json::object& obj = js.as_object();
+
+            // 从 JSON 对象中读取光照数据
+            if (obj.contains("light") && obj.at("light").is_number())
+            {
+                float light_intensity = obj.at("light").as_double();
+                std::cout << "Light Intensity: " << light_intensity << std::endl;
+            }
+
+            if (obj.contains("time") && obj.at("time").is_number())
+            {
+                std::time_t timestamp = obj.at("time").as_int64();
+                std::cout << "Timestamp: " << std::asctime(std::localtime(&timestamp)) << std::endl;
+            }
+
+            // 可以继续读取其他类型的数据，如字符串、布尔值等
+        }
+        else
+        {
+            std::cerr << "Received JSON is not an object." << std::endl;
+        }
+    }
+}
 
     // Request path must be absolute and not contain "..".
     if( req.target().empty() ||

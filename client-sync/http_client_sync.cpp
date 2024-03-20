@@ -32,6 +32,54 @@ namespace http = beast::http;       // from <boost/beast/http.hpp>
 namespace net = boost::asio;        // from <boost/asio.hpp>
 using tcp = net::ip::tcp;           // from <boost/asio/ip/tcp.hpp>
 
+
+
+void send_temperature(const std::string& host, const std::string& port)
+{
+    temperature_sensor temp_sensor;
+    float temperature = temp_sensor.get_temperature();
+
+    // 构造 HTTP 请求对象
+    http::request<http::string_body> req{http::verb::post, "/temperature", 11};
+    req.set(http::field::host, host);
+    req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+    http::response<http::string_body> res;
+
+    // 构造 JSON 数据
+    boost::json::object data;
+    data["temperature"] = temperature;
+    data["time"] = std::time(nullptr);
+    std::string json_data = boost::json::serialize(data);
+    req.body() = json_data;
+    req.prepare_payload();
+
+    // 发送 HTTP 请求
+    http_service::send_request(host, port, req,res);
+}
+
+void send_light(const std::string& host, const std::string& port)
+{
+    light_sensor light_sensor;
+    float light = light_sensor.get_light_intensity();
+
+    // 构造 HTTP 请求对象
+    http::request<http::string_body> req{http::verb::post, "/light", 11};
+    req.set(http::field::host, host);
+    req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+     http::response<http::string_body> res;
+
+    // 构造 JSON 数据
+    boost::json::object data;
+    data["light"] = light;
+    data["time"] = std::time(nullptr);
+    std::string json_data = boost::json::serialize(data);
+    req.body() = json_data;
+    req.prepare_payload();
+
+    // 发送 HTTP 请求
+    http_service::send_request(host, port, req,res);
+}
+
 // Performs an HTTP GET and prints the response
 int main(int argc, char** argv)
 {
@@ -44,27 +92,16 @@ int main(int argc, char** argv)
        
         while(true)
         {
-            //获取温度数据
-            temperature_sensor temp_sensor;
-            float temperature = temp_sensor.get_temperature();
 
             //发送温度数据
-            http_service::send_temperature(host,port,temperature);
-
-            //获取光照数据
-            light_sensor light_sensor;
-            float light =light_sensor.get_light_intensity();
+            send_temperature(host,port);
 
             //发送光照数据
-            http_service::send_light(host,port,light);
+           send_light(host,port);
 
 
             //五秒间隔
             std::this_thread::sleep_for(std::chrono::seconds(5));
-
-
-
-
 
         }
          
